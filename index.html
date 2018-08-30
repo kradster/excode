@@ -1,0 +1,101 @@
+<!Doctype.html>
+<html>
+<title>Excode</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.1.0/font-awesome-animation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/components/button.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/components/message.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/components/label.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- Google Tag Manager -->
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <style>
+        *{
+            margin:0px;
+            box-sizing:border-box;
+        }
+        .banner{
+            padding:10px;
+            background-color:#304ffe;
+            color:#fff;
+            font-size:2rem;
+            font-weight:bold;
+            position: fixed;
+            top:0px;
+            width:100%;
+        }
+        .col.s6{
+            height:80%;
+            overflow:scroll;
+        }
+        .col.s6::-webkit-scrollbar{
+            width:10px;
+            background-color:#eee;
+        }
+        
+        .col.s6::-webkit-scrollbar-thumb{
+            background-color:#304ffe;
+            width:10px;
+            height:10px;
+        }
+        .s6:nth-child(1){
+            padding:10px;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        textarea{
+            border:none !important;
+        }
+        sup{
+            font-size:1rem;
+            font-weight:normal;
+        }
+    </style>
+    <body>
+<div class="banner">Excode <sup>beta</sup> <span style="font-weight:lighter;">A lite HTML editor</span></div>
+<div class="row" style="margin-top:65px;">
+    <textarea id="editor" class="col s6 black yellow-text">
+    <p>Hello, world</p>
+    <p>Edit to change....</p>
+
+    </textarea>
+    <div id="livepre" class="col s6 white">
+        
+    </div>
+</div>
+<script>
+    var editor = $('#editor');
+    var livepre = $('#livepre');
+
+    var x = localStorage;
+    var oldcode = x.getItem('savecode');
+
+    if(oldcode){
+        livepre.html(oldcode);
+        editor.val(oldcode);
+    }else{
+        var code = editor.val();
+        livepre.html(code);
+    }
+
+       
+    
+
+        
+
+    editor.on('input',function(){
+            var livecode = $(this).val();
+            livepre.html(livecode);
+            x.setItem('savecode',livecode);
+            
+        });
+
+
+</script>
+</body>
+</html>
