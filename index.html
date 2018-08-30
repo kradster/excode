@@ -27,11 +27,11 @@
             font-size:2rem;
             font-weight:bold;
             position: fixed;
-            top:0px;
+            bottom:0px;
             width:100%;
         }
         .col.s6{
-            height:80%;
+            height:90%;
             overflow:scroll;
         }
         .col.s6::-webkit-scrollbar{
@@ -51,14 +51,20 @@
         textarea{
             border:none !important;
         }
+        textarea:focus{
+            outline: none !important;
+        }
         sup{
             font-size:1rem;
             font-weight:normal;
         }
+        iframe{
+            border:none;
+        }
     </style>
     <body>
 <div class="banner">Excode <sup>beta</sup> <span style="font-weight:lighter;">A lite HTML editor</span></div>
-<div class="row" style="margin-top:65px;">
+<div class="row">
     <textarea id="editor" class="col s6 black yellow-text">
     <p>Hello, world</p>
     <p>Edit to change....</p>
