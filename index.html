@@ -64,9 +64,9 @@
     <p>Edit to change....</p>
 
     </textarea>
-    <div id="livepre" class="col s6 white">
+    <iframe id="livepre" class="col s6 white">
         
-    </div>
+    </iframe>
 </div>
 <script>
     var editor = $('#editor');
@@ -76,11 +76,11 @@
     var oldcode = x.getItem('savecode');
 
     if(oldcode){
-        livepre.html(oldcode);
+        livepre.prop('srcdoc',oldcode);
         editor.val(oldcode);
     }else{
         var code = editor.val();
-        livepre.html(code);
+        livepre.prop('srcdoc',code);
     }
 
        
@@ -90,7 +90,7 @@
 
     editor.on('input',function(){
             var livecode = $(this).val();
-            livepre.html(livecode);
+            livepre.prop('srcdoc',livecode);
             x.setItem('savecode',livecode);
             
         });
