@@ -29,28 +29,30 @@
             position: fixed;
             bottom:0px;
             width:100%;
-        }
-        .col.s6{
-            height:90%;
-            overflow:scroll;
-        }
-        .col.s6::-webkit-scrollbar{
-            width:10px;
-            background-color:#eee;
+            z-index:9999999999;
         }
         
-        .col.s6::-webkit-scrollbar-thumb{
-            background-color:#304ffe;
-            width:10px;
-            height:10px;
-        }
-        .s6:nth-child(1){
-            padding:10px;
-            font-family:Arial, Helvetica, sans-serif;
-        }
         textarea{
             border:none !important;
+            height:100%;
+            font-size:1rem;
+            font-family:monospace;
         }
+
+        #html-editor{
+            color:yellow;
+            text-align: left !important;
+        }
+        #css-editor{
+            color:mediumaquamarine;
+            text-align: left !important;
+        }
+        #js-editor{
+            color:deepskyblue;
+            text-align: left !important;
+
+        }
+
         textarea:focus{
             outline: none !important;
         }
@@ -60,47 +62,162 @@
         }
         iframe{
             border:none;
+            width:100%;
+            height:100%;
         }
+        .no-padd{
+            padding:0px !important;
+        }
+        .main-grid{
+            display:grid;
+            grid-template-columns:1fr 1.5fr;
+            height:100%;
+        }
+        .child-grid{
+            
+        }
+        .child-grid-nested{
+            display:grid;
+            grid-template-columns:1fr 11fr;
+            grid-template-rows:1fr 1fr 1fr;
+        }
+        .child-grid-item{
+            background-color:#eee;
+            padding:0.5rem;
+            background-color:darkslategrey;
+            font-weight:bolder;
+            font-size:1.5rem;
+            overflow-y: scroll;
+
+            
+
+        }
+        .child-grid-item:nth-child(1),
+        .child-grid-item:nth-child(3),
+        .child-grid-item:nth-child(5){
+            background-color:black;
+            overflow: hidden;
+        }
+    
     </style>
     <body>
-<div class="banner">Excode <sup>beta</sup> <span style="font-weight:lighter;">A lite HTML editor</span></div>
-<div class="row">
-    <textarea id="editor" class="col s6 black yellow-text">
+        <div class="main-grid">
+            <div class="child-grid child-grid-nested">
+                <div class="child-grid-item yellow-text" id="block-html"><></div>
+                <div class="child-grid-item" id="block-html">
+                <textarea id="html-editor">
+                    <h1>Hello world</h1>
+                </textarea>
+                </div>
+                <div class="child-grid-item pink-text" id="block-css">{ }</div>
+                <div class="child-grid-item" id="block-css">
+                <textarea id="css-editor">
+                    body{
+                        background-color:red;
+                    }
+                </textarea>
+                </div>
+                <div class="child-grid-item light-blue-text" id="block-css">;</div>
+                <div class="child-grid-item" id="block-js">
+                <textarea id="js-editor">
+                    <script>
+                        console.log('hello word');
+                    </script>
+                </textarea>
+                </div>
+            </div>
+            <div class="child-grid white">
+                    <iframe id="livepre" class="white">
+        
+                    </iframe>
+            </div>
+        </div>
+<!-- <div class="banner">Excode <sup>beta</sup> <span style="font-weight:lighter;">A lite HTML editor</span></div>
+<div class="row no-padd">
+    <div class="col s6 no-padd black" style="display:block;height:90%;">
+    <div class="col s1 no-padd">
+        <button title="html" class="col s12 ui button black active"><></button>
+        <button title="css" class="col s12 ui button black">{ }</button>
+        <button title="js" class="col s12  ui button black">;</button>
+    </div>
+    <textarea id="editor" class="col s11 black yellow-text" style="height:100%;">
     <p>Hello, world</p>
     <p>Edit to change....</p>
 
     </textarea>
+    </div>
     <iframe id="livepre" class="col s6 white">
         
     </iframe>
-</div>
+</div> -->
 <script>
-    var editor = $('#editor');
+    var htmleditor = $('#html-editor');
+    var csseditor = $('#css-editor');
+    var jseditor = $('#js-editor');
+
     var livepre = $('#livepre');
 
-    var x = localStorage;
-    var oldcode = x.getItem('savecode');
+    var boiletplate_code_start = "<html><head><title>hello</title><style>";
+    var csscode = "";
+    var boiletplate_code_middle = "</style></head><body>";
+    var htmlcode = "";
+    var jscode = "";
 
-    if(oldcode){
-        livepre.prop('srcdoc',oldcode);
-        editor.val(oldcode);
-    }else{
-        var code = editor.val();
-        livepre.prop('srcdoc',code);
-    }
+
+    var x = localStorage;
+    var oldhtmlcode = x.getItem('htmlcode');
+    var oldcsscode = x.getItem('csscode');
+    var oldjscode = x.getItem('jscode');
+
+
+    if(oldhtmlcode){livepre.prop('srcdoc',oldhtmlcode);htmleditor.val(oldhtmlcode);}
+    else{livepre.prop('srcdoc',htmleditor.val());}
+    if(oldcsscode){livepre.prop('srcdoc',oldcsscode);csseditor.val(oldcsscode);}
+    else{livepre.prop('srcdoc',csscode.val());}
+    if(oldjscode){livepre.prop('srcdoc',oldjscode);jseditor.val(oldjscode);}
+    else{livepre.prop('srcdoc',jseditor.val());}
 
        
     
-
-        
-
-    editor.on('input',function(){
+    htmleditor.on('input',function(){
             var livecode = $(this).val();
-            livepre.prop('srcdoc',livecode);
-            x.setItem('savecode',livecode);
+            htmlcode = livecode;
+            makeFullCode();
+            x.setItem('htmlcode',htmlcode);
+            
+        });
+    csseditor.on('input',function(){
+            var livecode = $(this).val();
+            csscode = livecode;
+            makeFullCode();
+            x.setItem('csscode',csscode);
+            // x.setItem('savecode',livecode);
+            
+        });
+    jseditor.on('input',function(){
+            var livecode = $(this).val();
+            jscode = livecode;
+            makeFullCode();
+            x.setItem('jscode',jscode);
+            // x.setItem('savecode',livecode);
             
         });
 
+
+
+        function makeFullCode(){
+            var fullcode = boiletplate_code_start+
+            csscode+
+            boiletplate_code_middle+
+            htmlcode+
+            jscode;
+            //boiletplate_code_end;
+
+            console.log(fullcode);
+            livepre.prop('srcdoc',fullcode);
+
+            
+        }
 
 </script>
 </body>
