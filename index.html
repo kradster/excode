@@ -106,23 +106,19 @@
                 <div class="child-grid-item yellow-text" id="block-html"><></div>
                 <div class="child-grid-item" id="block-html">
                 <textarea id="html-editor">
-                    <h1>Hello world</h1>
+                   
                 </textarea>
                 </div>
                 <div class="child-grid-item pink-text" id="block-css">{ }</div>
                 <div class="child-grid-item" id="block-css">
                 <textarea id="css-editor">
-                    body{
-                        background-color:red;
-                    }
+                   
                 </textarea>
                 </div>
                 <div class="child-grid-item light-blue-text" id="block-css">;</div>
                 <div class="child-grid-item" id="block-js">
                 <textarea id="js-editor">
-                    <script>
-                        console.log('hello word');
-                    </script>
+                   
                 </textarea>
                 </div>
             </div>
@@ -161,7 +157,10 @@
     var csscode = "";
     var boiletplate_code_middle = "</style></head><body>";
     var htmlcode = "";
+    var jscodeblock = "<script>"
     var jscode = "";
+    var jscodeblockend = "<//script>"
+    var boiletplate_code_end = "</body></html>"
 
 
     var x = localStorage;
@@ -173,9 +172,11 @@
     if(oldhtmlcode){livepre.prop('srcdoc',oldhtmlcode);htmleditor.val(oldhtmlcode);}
     else{livepre.prop('srcdoc',htmleditor.val());}
     if(oldcsscode){livepre.prop('srcdoc',oldcsscode);csseditor.val(oldcsscode);}
-    else{livepre.prop('srcdoc',csscode.val());}
+    else{livepre.prop('srcdoc',csseditor.val());}
     if(oldjscode){livepre.prop('srcdoc',oldjscode);jseditor.val(oldjscode);}
     else{livepre.prop('srcdoc',jseditor.val());}
+
+    intipreveiw();
 
        
     
@@ -210,13 +211,23 @@
             csscode+
             boiletplate_code_middle+
             htmlcode+
-            jscode;
-            //boiletplate_code_end;
+            jscodeblock+
+            jscode+
+            jscodeblockend+
+            boiletplate_code_end;
 
             console.log(fullcode);
             livepre.prop('srcdoc',fullcode);
 
             
+        }
+
+        function intipreveiw(){
+            csscode = csseditor.val();
+            htmlcode  = htmleditor.val();
+            jscode  = jseditor.val();
+
+            makeFullCode();
         }
 
 </script>
